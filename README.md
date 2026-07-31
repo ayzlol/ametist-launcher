@@ -50,7 +50,7 @@ By using this launcher, you agree to **Mojang's EULA**. You must own a valid Min
 
 ## 📦 Installation
 ```bash
-git clone https://github.com//ayzlol/metist-launcher.git
+git clone https://github.com/ayzlol/metist-launcher.git
 cd ametist-launcher
 pip install -r requirements.txt
 python Qwen_python_20260731_xlh7to5md.py
