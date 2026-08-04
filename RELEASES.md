@@ -1,26 +1,26 @@
 # Releases
 
-## v0.1.0-beta — Beta İlk Sürüm
+## v0.1.0-beta — Beta Initial Release
 
-Tarih: 2026-07-31
+Date: 2026-07-31
 
-Kısa özet:
-- Ametist Launcher beta ilk sürümü (offline-only). Vanilla & Fabric için temel launcher işlevleri içerir.
+Summary:
+- Ametist Launcher beta initial release (offline-only). Includes basic launcher functionality for Vanilla & Fabric.
 
-Nasıl çalıştırılır:
-1. Python 3.11+ yüklü ise:
+How to run:
+1. If Python 3.11+ is installed:
    - pip install -r requirements.txt
    - python Ametist.py
-2. Windows için `run.bat`, Linux/macOS için `run.sh` kullanılabilir.
+2. Use `run.bat` on Windows or `run.sh` on Linux/macOS.
 
-Bilinen notlar / uyarılar:
-- Bu bir beta sürümüdür; bazı özellikler eksik veya kararlı olmayabilir.
-- Eğer kullanıcıların kolay çalıştırmasını istiyorsan, PyInstaller ile ikili (exe) paketleri oluşturup release'e eklemeyi öneririm.
+Known notes / warnings:
+- This is a beta release; some features may be missing or unstable.
+- To make it easier for users to run, consider creating standalone binaries (e.g., with PyInstaller) and uploading them as release assets.
 
-Yapılabilecekler (öneri):
-- Binaries (Windows/Linux/macOS) oluşturup GitHub Release'e asset olarak ekle.
-- SHA256 checksum dosyası ekle.
-- CHANGELOG.md oluşturup versiyon geçmişini takip et.
-- README.md içinde sürüm bilgisi ve kurulum talimatlarını genişlet.
+Recommendations:
+- Build binaries for Windows, Linux, and macOS and attach them to the GitHub Release.
+- Add a SHA256 checksum file for any binary assets.
+- Create a `CHANGELOG.md` to track version history.
+- Expand the release section in `README.md` with installation and usage examples.
 
-Eğer isterseniz, ben artefakt (exe/zip) hazırlayıp release oluşturma komutlarını da verebilirim veya bir GitHub Action workflow ile otomatik release kurulumunu ekleyebilirim.
+If you want, I can prepare release artifacts (exe/zip) and provide the gh CLI commands to upload them, or add a GitHub Actions workflow to automate building and publishing releases.
