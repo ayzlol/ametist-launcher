@@ -20,6 +20,12 @@
 
 ## 📸 Screenshots
 
+### Welcome & Settings Interface
+![Ametist Launcher Settings](https://github.com/ayzlol/ametist-launcher/raw/main/Ekran%20G%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202026-08-26%2016-11-34.png)
+
+### Launcher with Version Selection
+![Ametist Launcher Main Interface](https://github.com/ayzlol/ametist-launcher/raw/main/Ekran%20G%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202026-08-26%2016-11-46.png)
+
 ---
 
 ## 📖 Overview
