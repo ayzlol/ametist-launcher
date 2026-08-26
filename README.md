@@ -20,13 +20,11 @@
 
 ## 📸 Screenshots
 
-![Ametist Launcher Main Interface](https://github.com/ayzlol/ametist-launcher/raw/main/Ekran%20Görüntüsü%202026-07-31%2022-10-07.png)
-
 ---
 
 ## 📖 Overview
 
-**Ametist Launcher** is a powerful, community-driven Minecraft launcher designed with **speed, simplicity, and elegance** at its core. Whether you're a vanilla purist, a heavy modder with Forge, or exploring the latest with Quilt, Ametist delivers a seamless gaming experience with deep customization and intelligent resource management.
+**Ametist Launcher** is a powerful, community-driven Minecraft launcher designed with **speed, simplicity, and elegance** at its core. Whether you're a vanilla purist, a heavy modder with Forge, or a Quilt enthusiast, Ametist delivers **lightning-fast performance** with a **beautiful, modern interface**.
 
 ### 🎯 Core Philosophy
 
