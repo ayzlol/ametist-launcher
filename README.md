@@ -53,9 +53,7 @@ Ametist Launcher speaks your language:
 - **Russian** 🇷🇺 (Русский)
 - **Chinese** 🇨🇳 (中文)
 - **Spanish** 🇪🇸 (Español)
-
-Fully localized interface with instant "Please wait..." loading prompts in your preferred language.
-
+- 
 ### 📦 Complete Loader Support
 Launch **any** Minecraft variant with full support:
 
@@ -63,7 +61,7 @@ Launch **any** Minecraft variant with full support:
 |--------|--------|---------|
 | **Vanilla** | ✅ Full Support | Pure Minecraft releases |
 | **Fabric** | ✅ Full Support | Lightweight modding framework |
-| **Forge** | ✅ Full Support | Heavy modding powerhouse |
+| **Forge** | ❌ not exactly  | Heavy modding powerhouse |
 | **Quilt** | ✅ Full Support | Modern, community-focused loader |
 
 ### 🧠 Dynamic & Smart RAM Management
@@ -92,7 +90,7 @@ Personalize every aspect:
 Monitor and optimize:
 - **Java Version Detection**: Automatic JRE validation
 - **System RAM Monitoring**: Real-time memory information
-- **OS & Architecture Info**: Linux, Windows, macOS, x86_64, ARM64
+- **OS & Architecture Info**: Linux, Windows, macOS, x86_64, 
 - **Diagnostic Reports**: Detailed error messages with solutions
 
 ### 🎮 Additional Features
