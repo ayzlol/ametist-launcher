@@ -1,47 +1,47 @@
 # Releases
 
-Bu dosya Ametist Launcher’ın yayımlanan sürümlerini özetler. Hazır Windows ve Linux paketleri için [GitHub Releases sayfasını](https://github.com/ayzlol/ametist-launcher/releases) kullanabilirsin.
+This file summarizes the published Ametist Launcher versions. For ready-to-use Windows and Linux packages, visit the [GitHub Releases page](https://github.com/ayzlol/ametist-launcher/releases).
 
-## v1.2.1 — Tam sürüm — 2026-08-26
+## v1.2.1 — Full release — 2026-08-26
 
-Ametist Launcher v1.2.1, Windows ve Linux için hazır paketleri bulunan tam sürümdür. Launcher; Vanilla, Fabric, Forge ve Quilt sürümlerini yönetebilir.
+Ametist Launcher v1.2.1 is the full release with ready-to-use packages for Windows and Linux. The launcher supports Vanilla, Fabric, Forge, and Quilt versions.
 
-### Dahil olanlar
+### Included
 
-- Offline kullanıcı adı ile giriş
-- Vanilla, Fabric, Forge ve Quilt sürümlerini seçme ve başlatma
-- İlk kullanımda gerekli Minecraft ve loader dosyalarını indirme
-- İnternet bağlantısı olmadığında yerel kurulumları algılama
-- Dinamik veya manuel RAM sınırı
-- JVM performans seçenekleri
-- Kurulu ve indirilebilir sürümlerin arayüzde ayırt edilmesi
-- İngilizce, Türkçe, Rusça ve İspanyolca arayüz
-- Koyu tasarım
-- Menü panelini sol veya sağ tarafa alma
-- Özel arka plan ve profil resmi
-- Yerel mod klasörünü açma
-- Sistem, işletim sistemi ve RAM bilgilerini görüntüleme
+- Offline username login
+- Version selection and launching for Vanilla, Fabric, Forge, and Quilt
+- Downloading the required Minecraft and loader files on first installation
+- Local installation detection when there is no internet connection
+- Dynamic or manual RAM limits
+- JVM performance options
+- Clear distinction between installed and downloadable versions
+- English, Turkish, Russian, and Spanish interface translations
+- Dark interface
+- Left or right version-panel position
+- Custom background and profile avatar
+- Local mods-folder access
+- System, operating system, and RAM information
 
-### İndirme
+### Downloads
 
-- **Windows:** `AmetistLauncher.exe` dosyasını indirip çalıştır.
-- **Linux:** `AmetistLauncher-x86_64.AppImage` dosyasına çalıştırma izni verip çalıştır.
+- **Windows:** Download and run `AmetistLauncher.exe`.
+- **Linux:** Make `AmetistLauncher-x86_64.AppImage` executable and run it.
 
 ```bash
 chmod +x AmetistLauncher-x86_64.AppImage
 ./AmetistLauncher-x86_64.AppImage
 ```
 
-Hazır paketlerde Python ve proje bağımlılıkları bulunur. Minecraft için uyumlu Java Runtime Environment kurulumu gerekir. Dosyaların SHA-256 değerleri GitHub release sayfasında gösterilir.
+The packaged files include Python and the project dependencies. Minecraft still requires a compatible Java Runtime Environment. SHA-256 values for the files are shown on the GitHub release page.
 
-### İlk kullanım notu
+### First-use note
 
-Yeni bir Minecraft sürümünü veya loader’ı ilk kez kurarken internet bağlantısı gerekir. Dosyalar indirildikten sonra Ametist bunları `.ametist_mc` klasöründeki yerel kurulumlardan algılar. İnternet bağlantısı olmadığında yalnızca bilgisayarda hazır bulunan sürümler gösterilir.
+An internet connection is required when installing a Minecraft version or loader for the first time. After the files are downloaded, Ametist detects them from the local installations in the `.ametist_mc` directory. When there is no internet connection, only versions already available on the computer are shown.
 
-### Geri bildirim
+### Feedback
 
-Bir sorunla karşılaşırsan [Issues](https://github.com/ayzlol/ametist-launcher/issues) üzerinden işletim sistemini, Java sürümünü, Minecraft sürümünü, seçtiğin loader’ı ve hata mesajını paylaşabilirsin. Fikir ve öneriler için [GitHub Discussions](https://github.com/ayzlol/ametist-launcher/discussions) kullanılabilir.
+If you encounter a problem, share your operating system, Java version, Minecraft version, selected loader, and error message through [Issues](https://github.com/ayzlol/ametist-launcher/issues). Ideas and suggestions can be shared in [GitHub Discussions](https://github.com/ayzlol/ametist-launcher/discussions).
 
 ## v0.1.0-beta — 2026-07-31
 
-İlk geliştirme sürümüydü. Temel launcher akışı ve offline Vanilla/Fabric başlatma desteği içeriyordu.
+This was the first development release. It included the basic launcher flow and offline Vanilla/Fabric launching support.
