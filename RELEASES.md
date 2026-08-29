@@ -1,26 +1,40 @@
 # Releases
 
-## v0.1.0-beta — Beta Initial Release
+This file summarizes the published Ametist Launcher releases. For downloads, use the [GitHub Releases page](https://github.com/ayzlol/ametist-launcher/releases).
 
-Date: 2026-07-31
+## v1.2.1 — 2026-08-26
 
-Summary:
-- Ametist Launcher beta initial release (offline-only). Includes basic launcher functionality for Vanilla & Fabric.
+This release adds the first pre-built Windows and Linux downloads.
 
-How to run:
-1. If Python 3.11+ is installed:
-   - pip install -r requirements.txt
-   - python Ametist.py
-2. Use `run.bat` on Windows or `run.sh` on Linux/macOS.
+### Downloads
 
-Known notes / warnings:
-- This is a beta release; some features may be missing or unstable.
-- To make it easier for users to run, consider creating standalone binaries (e.g., with PyInstaller) and uploading them as release assets.
+- **Windows:** `AmetistLauncher.exe`
+- **Linux:** `AmetistLauncher-x86_64.AppImage`
 
-Recommendations:
-- Build binaries for Windows, Linux, and macOS and attach them to the GitHub Release.
-- Add a SHA256 checksum file for any binary assets.
-- Create a `CHANGELOG.md` to track version history.
-- Expand the release section in `README.md` with installation and usage examples.
+The release page includes SHA-256 checksums for both files. On Linux, make the AppImage executable before starting it:
 
-If you want, I can prepare release artifacts (exe/zip) and provide the gh CLI commands to upload them, or add a GitHub Actions workflow to automate building and publishing releases.
+```bash
+chmod +x AmetistLauncher-x86_64.AppImage
+./AmetistLauncher-x86_64.AppImage
+```
+
+### Important notes
+
+Ametist is an early beta and currently uses offline username login. The launcher’s tested application flow supports Vanilla and Fabric. Microsoft account authentication, Forge, Quilt, macOS, automatic updates, and online mod catalog integration are not available yet.
+
+The `main` branch may include changes that are newer than this release. Use the release assets when you want the stable packaged build.
+
+## v0.1.0-beta — 2026-07-31
+
+The initial beta release included the basic offline launcher flow for Vanilla and Fabric.
+
+To run it from source:
+
+```bash
+pip install -r requirements.txt
+python Ametist.py
+```
+
+## Versioning policy
+
+Release notes should describe user-visible changes, known limitations, supported platforms, and any migration or installation steps. Packaged files should be attached to a GitHub Release and accompanied by checksums whenever possible.
