@@ -1,34 +1,39 @@
-# RELEASE NOTES — v0.1.0 (Beta)
+# Release Notes — v1.2.1
 
-Ametist Launcher v0.1.0 — Beta release
+Ametist Launcher v1.2.1 is the current full release for Windows and Linux.
 
-Highlights:
+## Highlights
 
-- Initial release with support for Vanilla & Fabric
-- Offline-only launcher (Microsoft login coming soon)
-- Experimental custom avatar/skin support
-- RAM allocation between 2–16 GB
+- Vanilla, Fabric, Forge, and Quilt version selection and launching
+- Offline username login
+- Automatic installation of required Minecraft and loader files
+- Local installation detection when there is no internet connection
+- Dynamic or manual RAM allocation
+- JVM performance options for launching Minecraft
+- English, Turkish, Russian, and Spanish interface translations
+- Dark interface with configurable panel position
+- Custom background and avatar support
+- Local mods-folder access
+- System, operating system, and RAM information
+- Portable Windows executable and Linux AppImage packages
 
-How to install and run:
+## Installation
+
+Download `AmetistLauncher.exe` for Windows or `AmetistLauncher-x86_64.AppImage` for Linux from the [latest release](https://github.com/ayzlol/ametist-launcher/releases/latest).
+
+Minecraft still requires a compatible Java Runtime Environment. The first installation of a Minecraft version requires an internet connection. After the required files are present locally, Ametist can detect the installed versions when offline.
+
+To run from source:
 
 ```bash
 git clone https://github.com/ayzlol/ametist-launcher.git
 cd ametist-launcher
 pip install -r requirements.txt
-python Qwen_python_20260731_xlh7to5md.py
+python Ametist.py
 ```
 
-Notes and known issues:
+## Notes
 
-- This is a beta release; expect bugs and incomplete features.
-- Only tested on Minecraft 1.20+; older versions may not work.
-- Skin/avatar features are experimental and may not work reliably.
+Ametist is distributed as a full release. As with any actively maintained desktop application, issues can still occur on particular operating systems or Java installations. Please report the operating system, Java version, Minecraft version, loader, and exact error message when opening an issue.
 
-If you want to include assets (e.g. packaged binaries or installers), upload them to the GitHub release after creating it using the GitHub CLI or the web interface.
-
-Suggested release metadata:
-- Tag: v0.1.0
-- Title: v0.1.0 — Beta
-- Description: A lightweight open-source Minecraft launcher (Vanilla & Fabric) written in Python with CustomTkinter. Beta release, offline-only.
-
-Thank you for trying Ametist Launcher — please report issues and suggestions on the repo's Issues tab.
+The project is independent and is not affiliated with or endorsed by Mojang or Microsoft.
