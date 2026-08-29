@@ -1,59 +1,64 @@
 # Ametist Launcher
 
-Ametist Launcher, Minecraft’ı sade ve rahat bir arayüz üzerinden başlatmak için geliştirilmiş, açık kaynaklı bir launcher’dır. Proje artık beta olarak değil, **tam sürüm** olarak sunulmaktadır.
+Ametist Launcher is a complete, open-source Minecraft launcher for Windows and Linux. It provides a focused interface for selecting a Minecraft version, choosing Vanilla, Fabric, Forge, or Quilt, configuring RAM, and starting the game.
 
-Ametist; Vanilla, Fabric, Forge ve Quilt sürümlerini yönetebilir. İnternet bağlantısı olmadığında daha önce bilgisayara indirilmiş sürümleri algılar ve kullanılabilir sürümleri listeler.
+## Download
 
-## İndir
-
-En güncel Windows ve Linux paketlerine [Releases sayfasından](https://github.com/ayzlol/ametist-launcher/releases/latest) ulaşabilirsin.
+Download the latest ready-to-use package from the [Latest Release](https://github.com/ayzlol/ametist-launcher/releases/latest).
 
 - **Windows:** `AmetistLauncher.exe`
 - **Linux:** `AmetistLauncher-x86_64.AppImage`
 
-Windows paketini indirip doğrudan çalıştırabilirsin. Linux’ta AppImage dosyasına çalıştırma izni vermen gerekir:
+On Linux, make the AppImage executable before starting it:
 
 ```bash
 chmod +x AmetistLauncher-x86_64.AppImage
 ./AmetistLauncher-x86_64.AppImage
 ```
 
-Minecraft’ın çalışması için sisteminde uyumlu bir Java Runtime Environment bulunmalıdır. İndirme dosyalarının SHA-256 değerleri release sayfasında gösterilir.
+The packaged files include Python and the project dependencies. Minecraft still requires a compatible Java Runtime Environment. SHA-256 checksums are displayed next to the release assets on GitHub.
 
-## Öne çıkan özellikler
+## What Ametist provides
 
-Ametist, Vanilla ve mod yükleyicili oyun sürümleri için tek bir başlatma ekranı sunar. Desteklenen loader’lar Vanilla, Fabric, Forge ve Quilt’tir. İlk kurulum sırasında gerekli Minecraft ve loader dosyaları indirilir; daha sonraki açılışlarda yerel dosyalar kullanılır.
+Ametist supports Vanilla, Fabric, Forge, and Quilt version selection, installation, and launching. On the first installation, the required Minecraft and loader files are downloaded automatically. When the internet is unavailable, Ametist checks the local `.ametist_mc` installation directory and shows versions that are already available.
 
-Launcher, bilgisayarın toplam RAM miktarını algılayabilir ve dinamik RAM sınırı önerebilir. İstersen RAM miktarını manuel olarak da seçebilirsin. Oyun başlatılırken G1 Garbage Collector ve ilgili JVM seçenekleri kullanılarak daha dengeli bir çalışma hedeflenir.
+The launcher includes dynamic or manual RAM allocation and applies JVM performance options when starting Minecraft. It also displays system, operating system, architecture, Python, and RAM information so that launch settings are easier to understand.
 
-Arayüzde İngilizce, Türkçe, Rusça ve İspanyolca dilleri bulunur. Koyu tasarım, menü panelinin sol veya sağ tarafa alınması, özel arka plan, profil resmi ve ayarlar penceresi üzerinden hesap değiştirme desteklenir.
+The interface is available in English, Turkish, Russian, and Spanish. Users can switch between a dark interface, left or right version-panel layouts, custom backgrounds, and custom profile avatars. Settings are saved locally and remain available between launches.
 
-Ametist internet bağlantısını düzenli olarak kontrol eder. Bağlantı olmadığında yerel `versions` klasöründeki kurulu Vanilla, Fabric, Forge ve Quilt sürümlerini algılayarak yalnızca hazır olan sürümleri gösterir. Bu sayede daha önce indirilen oyun sürümlerini çevrim dışı kullanabilirsin.
+The Mods tab opens the local mods folder inside the Ametist data directory. It is intended for managing local mod files and does not currently provide an online Modrinth or CurseForge browser.
 
-Modlar sekmesi, Minecraft mod klasörünü açar. Mod dosyalarını `.minecraft` yerine Ametist’in kendi veri klasörü içindeki `mods` dizininden yönetebilirsin.
+## Supported loaders
 
-## Ekran görüntüleri
+| Loader | Support |
+|---|---|
+| Vanilla | Supported |
+| Fabric | Supported |
+| Forge | Supported |
+| Quilt | Supported |
 
-### Ana pencere
+## Screenshots
 
-![Ametist Launcher ana pencere](screenshot-main-window.png)
+### Main window
 
-### Ayarlar
+![Ametist Launcher main window](screenshot-main-window.png)
 
-![Ametist Launcher ayarlar penceresi](screenshot-settings.png)
+### Settings
 
-## Gereksinimler
+![Ametist Launcher settings window](screenshot-settings.png)
 
-Hazır Windows ve Linux paketlerinde Python ve proje kütüphaneleri paketlenmiştir. Minecraft için ayrıca uyumlu Java kurulumu gerekir.
+## Requirements
 
-Kaynak koddan çalıştırmak için:
+The ready-to-use Windows and Linux packages include the Python runtime and project libraries. You still need a compatible Java Runtime Environment for Minecraft.
 
-- Python 3.8 veya üzeri
+To run from source, install:
+
+- Python 3.8 or newer
 - pip
-- Uyumlu Java Runtime Environment
 - Git
+- A compatible Java Runtime Environment
 
-## Kaynak koddan çalıştırma
+## Run from source
 
 ```bash
 git clone https://github.com/ayzlol/ametist-launcher.git
@@ -61,7 +66,7 @@ cd ametist-launcher
 python -m venv venv
 ```
 
-Windows:
+On Windows:
 
 ```bat
 venv\Scripts\activate
@@ -69,7 +74,7 @@ pip install -r requirements.txt
 python Ametist.py
 ```
 
-Linux veya macOS:
+On Linux or macOS:
 
 ```bash
 source venv/bin/activate
@@ -77,21 +82,25 @@ pip install -r requirements.txt
 python3 Ametist.py
 ```
 
-Windows’ta `run.bat`, Linux ve macOS’ta `run.sh` dosyasını da kullanabilirsin.
+You can also use `run.bat` on Windows or `run.sh` on Linux and macOS.
 
-## İlk kullanım
+## First launch
 
-1. Ametist’i çalıştır ve kullanıcı adını gir.
-2. Vanilla, Fabric, Forge veya Quilt loader’larından birini seç.
-3. Minecraft sürümünü seç.
-4. RAM miktarını belirle.
-5. Başlat düğmesine bas.
+1. Start Ametist and enter an offline username.
+2. Select Vanilla, Fabric, Forge, or Quilt.
+3. Choose a Minecraft version.
+4. Select the amount of RAM to allocate.
+5. Press Launch.
 
-İlk kurulum sırasında internet bağlantısı gerekir. Oyun sürümü ve seçilen loader bilgisayara indirildikten sonra Ametist bunları yerel olarak algılar. İnternet bağlantısı olmadığında yalnızca daha önce kurulmuş sürümler listelenir.
+The first installation of a Minecraft version or loader requires an internet connection. After the files are downloaded, Ametist detects the local installation. If there is no internet connection, only versions already installed on the computer are shown.
 
-## Ayarlar ve veri klasörü
+## Offline usernames and account support
 
-Ametist ayarlarını ve oyun dosyalarını `.ametist_mc` klasöründe saklar:
+Ametist currently uses offline username login. Microsoft account authentication is not included. This behavior is described clearly so users know what to expect before downloading the launcher.
+
+## Data and configuration
+
+Ametist stores settings and Minecraft files in the `.ametist_mc` directory:
 
 ```text
 Windows: %APPDATA%\\.ametist_mc
@@ -99,52 +108,56 @@ Linux:   ~/.ametist_mc
 macOS:   ~/.ametist_mc
 ```
 
-Bu klasörde ayar dosyası, Minecraft sürümleri ve mod klasörü bulunur. Uygulamayı sıfırlamak istersen önce bu klasörün yedeğini alman önerilir.
+The directory contains the configuration file, installed Minecraft versions, loader installations, and the local mods folder. Back up this directory before resetting or moving the launcher data.
 
-## Sorun giderme
+## Troubleshooting
 
-### Java bulunamadı
+### Java is not detected
 
-Uyumlu bir Java Runtime Environment kur ve `java` komutunun sistem PATH değişkeninde bulunduğundan emin ol. Ubuntu için örnek:
+Install a compatible Java Runtime Environment and make sure the `java` command is available in your system PATH. On Ubuntu, for example:
 
 ```bash
 sudo apt install openjdk-17-jre-headless
 ```
 
-### AppImage açılmıyor
+### The AppImage does not start
 
-Dosyaya çalıştırma izni ver:
+Grant execute permission and try again:
 
 ```bash
 chmod +x AmetistLauncher-x86_64.AppImage
 ```
 
-### Sürüm listesi boş
+### The version list is empty
 
-İnternet bağlantını kontrol et. Çevrim dışı modda yalnızca daha önce kurulmuş sürümler gösterilir. Yeni bir Minecraft sürümünü ilk kez kurmak için internet bağlantısı gerekir.
+Check your internet connection. When offline, Ametist only lists versions that are already installed locally. A new Minecraft version must be installed while an internet connection is available.
 
-### Oyun bellek hatası veriyor
+### Minecraft reports a memory error
 
-Ayarlar bölümünden RAM miktarını sistemine göre değiştir. İşletim sisteminin ve diğer uygulamaların çalışması için yeterli RAM bırakmalısın.
+Change the RAM allocation in the launcher settings. Leave enough memory available for the operating system and other applications.
 
-## Hata bildirimi ve katkı
+## Reporting issues
 
-Bir hata ile karşılaşırsan [GitHub Issues](https://github.com/ayzlol/ametist-launcher/issues) üzerinden bildirebilirsin. Bildirimine işletim sistemini, Java sürümünü, Minecraft sürümünü, seçtiğin loader’ı ve görünen hata mesajını eklemen çözümü hızlandırır.
+If something does not work, open an [issue](https://github.com/ayzlol/ametist-launcher/issues) and include your operating system, Java version, Minecraft version, selected loader, exact error message, and relevant logs or screenshots.
 
-Fikirlerini ve kullanım deneyimini [GitHub Discussions](https://github.com/ayzlol/ametist-launcher/discussions) üzerinden paylaşabilirsin. Ametist bağımsız bir açık kaynak projesidir; katkılar ve yapıcı geri bildirimler memnuniyetle karşılanır.
+Feature ideas and general feedback are welcome in [GitHub Discussions](https://github.com/ayzlol/ametist-launcher/discussions).
 
-## Sürüm bilgisi
+## Version
 
-Bu depo tam sürüm olan Ametist Launcher v1.2.1’i içerir. `main` dalı, yayınlanmış paketlerden daha yeni değişiklikler içerebilir. Kullanıma hazır Windows veya Linux paketini edinmek için [Latest Release](https://github.com/ayzlol/ametist-launcher/releases/latest) sayfasını kullan.
+This repository contains the full Ametist Launcher v1.2.1 release. The `main` branch may contain newer changes than the packaged release assets. Use the [Latest Release](https://github.com/ayzlol/ametist-launcher/releases/latest) page when you want the downloadable Windows or Linux package.
 
-## Lisans
+## Contributing
 
-Ametist Launcher [MIT License](LICENSE) ile yayımlanır.
+Ametist is an independent open-source project, and practical feedback is welcome. For a large change, open an issue first. Pull requests should explain what changed and how the change was tested.
 
-Ametist Launcher bağımsız bir açık kaynak projesidir; Mojang veya Microsoft tarafından desteklenmez ve bu şirketlerle bağlantılı değildir.
+## License and trademark notice
 
-## Geliştiriciler
+Ametist Launcher is released under the [MIT License](LICENSE).
 
-Ametist Launcher, [Unfayd](https://github.com/Unfayd) ve [Thepan](https://github.com/ayzlol) tarafından geliştirilmektedir.
+Ametist Launcher is an independent project and is not affiliated with, endorsed by, or sponsored by Mojang or Microsoft.
 
-Kullanılan temel teknolojiler Python, CustomTkinter, `minecraft-launcher-lib` ve Pillow’dur.
+## Developers
+
+Ametist Launcher is developed by [Unfayd](https://github.com/Unfayd) and [Thepan](https://github.com/ayzlol).
+
+Built with Python, CustomTkinter, `minecraft-launcher-lib`, and Pillow.
