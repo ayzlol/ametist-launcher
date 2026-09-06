@@ -51,6 +51,7 @@ jobs:
         run: |
           mkdir -p AmetistLauncher.AppDir/usr/bin
           cp -a dist/AmetistLauncher/. AmetistLauncher.AppDir/usr/bin/
+          cp assets/AmetistLauncher.svg AmetistLauncher.AppDir/AmetistLauncher.svg
           cat > AmetistLauncher.AppDir/AppRun <<'EOF'
           #!/bin/sh
           HERE="$(dirname "$(readlink -f "$0")")"
@@ -62,6 +63,7 @@ jobs:
           Name=Ametist Launcher
           Comment=Open-source Minecraft launcher
           Exec=AmetistLauncher
+          Icon=AmetistLauncher
           Type=Application
           Categories=Game;
           Terminal=false
