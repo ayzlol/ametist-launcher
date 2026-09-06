@@ -1,0 +1,133 @@
+name: Build Ametist Launcher
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    name: Windows EXE
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt pyinstaller
+      - name: Build executable
+        run: pyinstaller --noconfirm --clean --windowed --name AmetistLauncher --add-data "assets;assets" Ametist.py
+      - name: Create ZIP package
+        shell: pwsh
+        run: Compress-Archive -Path dist/AmetistLauncher/* -DestinationPath AmetistLauncher-windows-x64.zip
+      - name: Upload Windows package
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmetistLauncher-windows-x64
+          path: AmetistLauncher-windows-x64.zip
+
+  build-linux:
+    name: Linux AppImage
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt pyinstaller
+      - name: Build executable
+        run: pyinstaller --noconfirm --clean --windowed --name AmetistLauncher --add-data 'assets:assets' Ametist.py
+      - name: Prepare AppDir
+        run: |
+          mkdir -p AmetistLauncher.AppDir/usr/bin
+          cp -a dist/AmetistLauncher/. AmetistLauncher.AppDir/usr/bin/
+          cat > AmetistLauncher.AppDir/AppRun <<'EOF'
+          #!/bin/sh
+          HERE="$(dirname "$(readlink -f "$0")")"
+          exec "$HERE/usr/bin/AmetistLauncher" "$@"
+          EOF
+          chmod +x AmetistLauncher.AppDir/AppRun
+          cat > AmetistLauncher.AppDir/AmetistLauncher.desktop <<'EOF'
+          [Desktop Entry]
+          Name=Ametist Launcher
+          Comment=Open-source Minecraft launcher
+          Exec=AmetistLauncher
+          Type=Application
+          Categories=Game;
+          Terminal=false
+          EOF
+      - name: Install appimagetool
+        run: |
+          curl -L --fail -o appimagetool.AppImage https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool.AppImage
+      - name: Build AppImage
+        run: ./appimagetool.AppImage --appimage-extract-and-run AmetistLauncher.AppDir AmetistLauncher-linux-x86_64.AppImage
+      - name: Upload Linux package
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmetistLauncher-linux-x86_64
+          path: AmetistLauncher-linux-x86_64.AppImage
+
+  build-macos:
+    name: macOS DMG
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt pyinstaller
+      - name: Build application bundle
+        run: pyinstaller --noconfirm --clean --windowed --name AmetistLauncher --add-data 'assets:assets' Ametist.py
+      - name: Create DMG
+        run: hdiutil create -volname AmetistLauncher -srcfolder dist/AmetistLauncher.app -ov -format UDZO AmetistLauncher-macos.dmg
+      - name: Upload macOS package
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmetistLauncher-macos
+          path: AmetistLauncher-macos.dmg
+
+  release:
+    name: Publish GitHub Release Assets
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build-windows, build-linux, build-macos]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: AmetistLauncher-windows-x64
+          path: release
+      - name: Download Linux artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: AmetistLauncher-linux-x86_64
+          path: release
+      - name: Download macOS artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: AmetistLauncher-macos
+          path: release
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: release/*
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      

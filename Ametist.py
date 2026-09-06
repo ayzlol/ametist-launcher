@@ -22,17 +22,58 @@ import customtkinter as ctk
 import minecraft_launcher_lib as mll
 
 # ============================================================
-# PURE AMETIST THEME CONSTANTS
+# AMETIST SAPPHIRE THEME CONSTANTS
 # ============================================================
-BG_DARK = "#0f0616"
-CARD_DARK = "#180d24"
-INPUT_BG_DARK = "#241436"
-BORDER_DARK = "#3d225c"
-TEXT_DARK = "#eadbf7"
-TEXT_SEC_DARK = "#b996e6"
-ACCENT = "#9d4edd"
-ACCENT_HOVER = "#7b2cbf"
-OFFLINE_COLOR = "#a78bfa" # Açık mor / mavi tonu
+# Koyu safir yüzeyler, elektrik mavisi aksiyonlar ve buz mavisi aktif durumlar.
+BG_DARK = "#0D121C"
+CARD_DARK = "#161B26"
+INPUT_BG_DARK = "#111824"
+BORDER_DARK = "#2A3447"
+TEXT_DARK = "#FFFFFF"
+TEXT_SEC_DARK = "#8C9BAE"
+ACCENT = "#0066FF"
+ACCENT_HOVER = "#3385FF"
+ACTIVE_COLOR = "#90E0EF"
+OFFLINE_COLOR = ACTIVE_COLOR
+
+# Bundled fonts: packaged builds use the same typography on every platform.
+APP_ROOT = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+FONT_DIR = os.path.join(APP_ROOT, "assets", "fonts")
+UI_FONT_FAMILY = "Inter Variable"
+TECH_FONT_FAMILY = "JetBrains Mono"
+TITLE_FONT_FAMILY = "Montserrat"
+
+
+def install_bundled_fonts():
+    """Install bundled TTF files for the current user when possible."""
+    font_files = ("InterVariable.ttf", "JetBrainsMono-Regular.ttf", "Montserrat-Bold.ttf")
+    try:
+        if sys.platform == "win32":
+            import ctypes
+            for filename in font_files:
+                path = os.path.join(FONT_DIR, filename)
+                if os.path.exists(path):
+                    ctypes.windll.gdi32.AddFontResourceExW(path, 0x10, 0)
+        elif sys.platform == "darwin":
+            target_dir = os.path.expanduser("~/Library/Fonts/Ametist")
+            os.makedirs(target_dir, exist_ok=True)
+            for filename in font_files:
+                source = os.path.join(FONT_DIR, filename)
+                target = os.path.join(target_dir, filename)
+                if os.path.exists(source) and not os.path.exists(target):
+                    shutil.copy2(source, target)
+        elif sys.platform.startswith("linux"):
+            target_dir = os.path.expanduser("~/.local/share/fonts/Ametist")
+            os.makedirs(target_dir, exist_ok=True)
+            for filename in font_files:
+                source = os.path.join(FONT_DIR, filename)
+                target = os.path.join(target_dir, filename)
+                if os.path.exists(source) and not os.path.exists(target):
+                    shutil.copy2(source, target)
+            if shutil.which("fc-cache"):
+                subprocess.run(["fc-cache", "-f", target_dir], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
 
 # ============================================================
 # SYSTEM OPTIMIZATION (RAM DETECTION)
@@ -166,13 +207,13 @@ class FirstRunLanguageWindow(ctk.CTk):
         self.geometry("400x320")
         self.configure(fg_color=BG_DARK)
         ctk.set_appearance_mode("Dark")
-        frame = ctk.CTkFrame(self, fg_color=CARD_DARK)
+        frame = ctk.CTkFrame(self, fg_color=CARD_DARK, corner_radius=0, border_width=1, border_color=BORDER_DARK)
         frame.pack(padx=20, pady=20, fill="both", expand=True)
-        ctk.CTkLabel(frame, text="Select Language / Dil Seçin\nВыберите язык / Selecciona idioma", font=("Segoe UI", 15, "bold"), text_color=TEXT_DARK).pack(pady=15)
+        ctk.CTkLabel(frame, text="Select Language / Dil Seçin\nВыберите язык / Selecciona idioma", font=(TITLE_FONT_FAMILY, 15, "bold"), text_color=TEXT_DARK).pack(pady=15)
         
         langs = [("en", "English"), ("tr", "Türkçe"), ("ru", "Русский"), ("es", "Español")]
         for code, name in langs:
-            ctk.CTkButton(frame, text=name, fg_color=INPUT_BG_DARK, hover_color=ACCENT, text_color=TEXT_DARK, command=lambda c=code: self.select(c)).pack(pady=4, padx=20, fill="x")
+            ctk.CTkButton(frame, text=name, fg_color=INPUT_BG_DARK, hover_color=ACCENT, corner_radius=0, height=30, text_color=TEXT_DARK, command=lambda c=code: self.select(c)).pack(pady=4, padx=20, fill="x")
 
     def select(self, code):
         self.config_manager.config.update({"language": code, "first_run": False})
@@ -194,13 +235,13 @@ class LoginWindow(ctk.CTk):
     def tr(self, key): return TRANSLATIONS.get(self.lang, TRANSLATIONS["en"]).get(key, key)
 
     def show_input(self):
-        frame = ctk.CTkFrame(self, fg_color=CARD_DARK)
+        frame = ctk.CTkFrame(self, fg_color=CARD_DARK, corner_radius=0, border_width=1, border_color=BORDER_DARK)
         frame.pack(padx=20, pady=20, fill="both", expand=True)
-        ctk.CTkLabel(frame, text=self.tr("login_title"), font=("Segoe UI", 18, "bold"), text_color=ACCENT).pack(pady=(20, 15))
-        self.entry = ctk.CTkEntry(frame, placeholder_text=self.tr("username_placeholder"), fg_color=INPUT_BG_DARK, border_color=BORDER_DARK, text_color=TEXT_DARK)
+        ctk.CTkLabel(frame, text=self.tr("login_title"), font=(TITLE_FONT_FAMILY, 18, "bold"), text_color=ACCENT).pack(pady=(20, 15))
+        self.entry = ctk.CTkEntry(frame, placeholder_text=self.tr("username_placeholder"), fg_color=INPUT_BG_DARK, border_color=BORDER_DARK, corner_radius=0, height=30, text_color=TEXT_DARK)
         self.entry.pack(pady=10, padx=20, fill="x")
         self.entry.bind("<Return>", lambda e: self.login())
-        ctk.CTkButton(frame, text=self.tr("launch_btn"), fg_color=ACCENT, hover_color=ACCENT_HOVER, command=self.login).pack(pady=10, padx=20, fill="x")
+        ctk.CTkButton(frame, text=self.tr("launch_btn"), fg_color=ACCENT, hover_color=ACCENT_HOVER, corner_radius=0, height=34, command=self.login).pack(pady=10, padx=20, fill="x")
 
     def login(self):
         username = self.entry.get().strip()
@@ -221,7 +262,7 @@ class SettingsWindow(ctk.CTkToplevel):
         self.geometry("520x520")
         self.configure(fg_color=BG_DARK)
         
-        tabview = ctk.CTkTabview(self, fg_color=CARD_DARK, segmented_button_selected_color=ACCENT, segmented_button_unselected_color=INPUT_BG_DARK, text_color=TEXT_DARK)
+        tabview = ctk.CTkTabview(self, fg_color=CARD_DARK, corner_radius=0, segmented_button_selected_color=ACCENT, segmented_button_unselected_color=INPUT_BG_DARK, text_color=TEXT_DARK)
         tabview.pack(padx=20, pady=20, fill="both", expand=True)
         
         t_about = tabview.add(self.tr("about_tab"))
@@ -230,15 +271,15 @@ class SettingsWindow(ctk.CTkToplevel):
         t_bg = tabview.add(self.tr("bg_tab"))
         t_mods = tabview.add(self.tr("mods_tab"))
         
-        ctk.CTkLabel(t_about, text="Ametist Launcher v1.2.1\nAmetist Edition (Optimized)", font=("Segoe UI", 16, "bold"), text_color=TEXT_DARK).pack(pady=15)
-        ctk.CTkButton(t_about, text=self.tr("logout"), fg_color="#b91c1c", hover_color="#991b1b", command=self.logout).pack(pady=20)
+        ctk.CTkLabel(t_about, text="Ametist Launcher v1.2.1\nAmetist Edition (Optimized)", font=(TITLE_FONT_FAMILY, 16, "bold"), text_color=TEXT_DARK).pack(pady=15)
+        ctk.CTkButton(t_about, text=self.tr("logout"), fg_color="#b91c1c", hover_color="#991b1b", corner_radius=0, command=self.logout).pack(pady=20)
 
         self.lang_var = tk.StringVar(value=self.lang)
         for c, n in [("en", "English"), ("tr", "Türkçe"), ("ru", "Русский"), ("es", "Español")]:
             ctk.CTkRadioButton(t_lang, text=n, variable=self.lang_var, value=c, fg_color=ACCENT, command=self.save_cfg).pack(anchor="w", pady=5, padx=10)
 
         self.pos_var = tk.StringVar(value=self.cm.config.get("version_panel_pos", "left"))
-        ctk.CTkLabel(t_theme, text=self.tr("version_pos"), font=("Segoe UI", 12, "bold"), text_color=TEXT_DARK).pack(anchor="w", pady=(5, 5), padx=10)
+        ctk.CTkLabel(t_theme, text=self.tr("version_pos"), font=(UI_FONT_FAMILY, 12, "bold"), text_color=TEXT_DARK).pack(anchor="w", pady=(5, 5), padx=10)
         ctk.CTkRadioButton(t_theme, text=self.tr("pos_left"), variable=self.pos_var, value="left", fg_color=ACCENT, command=self.save_cfg).pack(anchor="w", pady=5, padx=10)
         ctk.CTkRadioButton(t_theme, text=self.tr("pos_right"), variable=self.pos_var, value="right", fg_color=ACCENT, command=self.save_cfg).pack(anchor="w", pady=5, padx=10)
         
@@ -248,9 +289,9 @@ class SettingsWindow(ctk.CTkToplevel):
         self.dyn_ram_var = tk.BooleanVar(value=self.cm.config.get("dynamic_ram_limit", True))
         ctk.CTkSwitch(t_theme, text=self.tr("dynamic_ram"), variable=self.dyn_ram_var, progress_color=ACCENT, command=self.save_cfg).pack(anchor="w", pady=10, padx=10)
 
-        ctk.CTkButton(t_bg, text=self.tr("select_bg"), fg_color=ACCENT, hover_color=ACCENT_HOVER, command=self.select_bg).pack(pady=10, fill="x", padx=20)
-        ctk.CTkButton(t_bg, text=self.tr("reset_bg"), fg_color=INPUT_BG_DARK, hover_color=BORDER_DARK, command=self.reset_bg).pack(pady=10, fill="x", padx=20)
-        ctk.CTkButton(t_mods, text=self.tr("open_mods"), fg_color=ACCENT, hover_color=ACCENT_HOVER, command=self.open_mods).pack(pady=10)
+        ctk.CTkButton(t_bg, text=self.tr("select_bg"), fg_color=ACCENT, hover_color=ACCENT_HOVER, corner_radius=0, command=self.select_bg).pack(pady=10, fill="x", padx=20)
+        ctk.CTkButton(t_bg, text=self.tr("reset_bg"), fg_color=INPUT_BG_DARK, hover_color=BORDER_DARK, corner_radius=0, command=self.reset_bg).pack(pady=10, fill="x", padx=20)
+        ctk.CTkButton(t_mods, text=self.tr("open_mods"), fg_color=ACCENT, hover_color=ACCENT_HOVER, corner_radius=0, command=self.open_mods).pack(pady=10)
 
     def tr(self, key): return TRANSLATIONS.get(self.lang, TRANSLATIONS["en"]).get(key, key)
     
@@ -326,7 +367,7 @@ class AmetistLauncher(ctk.CTk):
             if w < 20 or h < 20: return
             img = Image.open(path).convert("RGBA").resize((w, h), Image.Resampling.LANCZOS)
             img = ImageEnhance.Brightness(img).enhance(0.5)
-            img = Image.alpha_composite(img, Image.new('RGBA', img.size, (15, 6, 22, 170)))
+            img = Image.alpha_composite(img, Image.new('RGBA', img.size, (7, 13, 24, 175)))
             self.bg_image_ref = ImageTk.PhotoImage(img)
             self.bg_canvas.delete("all")
             self.bg_canvas.create_image(0, 0, image=self.bg_image_ref, anchor="nw")
@@ -334,7 +375,7 @@ class AmetistLauncher(ctk.CTk):
         except: pass
 
     def setup_ui(self):
-        self.header = ctk.CTkFrame(self, fg_color=CARD_DARK, border_width=1, border_color=BORDER_DARK)
+        self.header = ctk.CTkFrame(self, fg_color=CARD_DARK, border_width=1, border_color=BORDER_DARK, corner_radius=0)
         self.header.pack(fill="x", padx=15, pady=(15, 5))
         
         self.avatar_ref = self.create_avatar()
@@ -342,56 +383,56 @@ class AmetistLauncher(ctk.CTk):
         self.avatar_label.pack(side="left", padx=10, pady=8)
         self.avatar_label.bind("<Button-1>", lambda e: self.select_avatar())
         
-        self.lbl_welcome = ctk.CTkLabel(self.header, text="", font=("Segoe UI", 15, "bold"), text_color=TEXT_DARK)
+        self.lbl_welcome = ctk.CTkLabel(self.header, text="", font=(TITLE_FONT_FAMILY, 15, "bold"), text_color=TEXT_DARK)
         self.lbl_welcome.pack(side="left", padx=10)
         
-        self.lbl_launcher_ver = ctk.CTkLabel(self.header, text=self.tr("launcher_version"), font=("Segoe UI", 12, "bold"), text_color=TEXT_SEC_DARK)
+        self.lbl_launcher_ver = ctk.CTkLabel(self.header, text=self.tr("launcher_version"), font=(TITLE_FONT_FAMILY, 12, "bold"), text_color=TEXT_SEC_DARK)
         self.lbl_launcher_ver.pack(side="right", padx=15)
         
-        self.lbl_offline = ctk.CTkLabel(self.header, text="", font=("Segoe UI", 14, "bold"), text_color=OFFLINE_COLOR)
+        self.lbl_offline = ctk.CTkLabel(self.header, text="", font=(UI_FONT_FAMILY, 14, "bold"), text_color=OFFLINE_COLOR)
         self.lbl_offline.pack(side="right", padx=10)
         
-        ctk.CTkButton(self.header, text="Settings", width=40, fg_color=INPUT_BG_DARK, hover_color=BORDER_DARK, command=self.open_settings).pack(side="right", padx=5, pady=8)
+        ctk.CTkButton(self.header, text="Settings", width=40, fg_color=INPUT_BG_DARK, hover_color=ACCENT_HOVER, corner_radius=0, border_width=1, border_color=BORDER_DARK, command=self.open_settings).pack(side="right", padx=5, pady=8)
 
-        self.content_container = ctk.CTkFrame(self, fg_color="transparent")
+        self.content_container = ctk.CTkFrame(self, fg_color="transparent", corner_radius=0)
         self.content_container.pack(fill="both", expand=True, padx=15, pady=5)
 
-        self.version_panel = ctk.CTkFrame(self.content_container, fg_color=CARD_DARK, border_width=1, border_color=BORDER_DARK, width=320)
-        self.main_panel = ctk.CTkFrame(self.content_container, fg_color=CARD_DARK, border_width=1, border_color=BORDER_DARK)
+        self.version_panel = ctk.CTkFrame(self.content_container, fg_color=CARD_DARK, border_width=1, border_color=BORDER_DARK, width=320, corner_radius=0)
+        self.main_panel = ctk.CTkFrame(self.content_container, fg_color=CARD_DARK, border_width=1, border_color=BORDER_DARK, corner_radius=0)
 
         self.create_option_row(self.version_panel, self.tr("version_type"), ["Vanilla", "Fabric", "Forge", "Quilt"], "type_opt", 15, command=lambda _: self.update_version_options())
         
-        self.version_scroll = ctk.CTkScrollableFrame(self.version_panel, fg_color=INPUT_BG_DARK, border_color=BORDER_DARK, corner_radius=6)
+        self.version_scroll = ctk.CTkScrollableFrame(self.version_panel, fg_color=INPUT_BG_DARK, border_color=BORDER_DARK, corner_radius=0)
         self.version_scroll.pack(fill="both", expand=True, padx=15, pady=5)
         self.selected_version_var = tk.StringVar(value="")
 
         self.create_option_row(self.version_panel, self.tr("ram_label"), ["2 GB"], "ram_opt", 10)
         
-        self.btn_launch = ctk.CTkButton(self.version_panel, text="", font=("Segoe UI", 16, "bold"), height=50, fg_color=ACCENT, hover_color=ACCENT_HOVER, command=self.start_launch)
+        self.btn_launch = ctk.CTkButton(self.version_panel, text="", font=(TITLE_FONT_FAMILY, 16, "bold"), height=42, corner_radius=0, fg_color=ACCENT, hover_color=ACCENT_HOVER, command=self.start_launch)
         self.btn_launch.pack(padx=15, pady=15, fill="x", side="bottom")
 
-        path_frame = ctk.CTkFrame(self.main_panel, fg_color="transparent", border_width=1, border_color=BORDER_DARK)
+        path_frame = ctk.CTkFrame(self.main_panel, fg_color="transparent", border_width=1, border_color=BORDER_DARK, corner_radius=0)
         path_frame.pack(fill="x", padx=20, pady=20)
-        ctk.CTkLabel(path_frame, text=self.tr("game_path_label"), font=("Segoe UI", 11, "bold"), text_color=ACCENT).pack(anchor="w", padx=10, pady=(8, 2))
-        ctk.CTkLabel(path_frame, text="%APPDATA%\\.ametist_mc" if os.name == "nt" else "~/.ametist_mc", font=("Consolas", 10), text_color=TEXT_DARK).pack(anchor="w", padx=10, pady=(0, 8))
+        ctk.CTkLabel(path_frame, text=self.tr("game_path_label"), font=(UI_FONT_FAMILY, 11, "bold"), text_color=ACCENT).pack(anchor="w", padx=10, pady=(8, 2))
+        ctk.CTkLabel(path_frame, text="%APPDATA%\\.ametist_mc" if os.name == "nt" else "~/.ametist_mc", font=(TECH_FONT_FAMILY, 10), text_color=TEXT_DARK).pack(anchor="w", padx=10, pady=(0, 8))
 
-        sys_frame = ctk.CTkFrame(self.main_panel, fg_color="transparent", border_width=1, border_color=BORDER_DARK)
+        sys_frame = ctk.CTkFrame(self.main_panel, fg_color="transparent", border_width=1, border_color=BORDER_DARK, corner_radius=0)
         sys_frame.pack(fill="x", padx=20, pady=(0, 20))
         
-        self.lbl_sys_title = ctk.CTkLabel(sys_frame, text=self.tr("sys_info_title"), font=("Segoe UI", 11, "bold"), text_color=ACCENT)
+        self.lbl_sys_title = ctk.CTkLabel(sys_frame, text=self.tr("sys_info_title"), font=(UI_FONT_FAMILY, 11, "bold"), text_color=ACCENT)
         self.lbl_sys_title.pack(anchor="w", padx=10, pady=(8, 2))
         
         os_info = f"OS: {platform.system()} ({platform.release()}) - Arch: {platform.machine()}"
         ram_info = f"RAM: {self.sys_ram} GB"
         python_info = f"Python: {platform.python_version()}"
         
-        self.lbl_sys_details = ctk.CTkLabel(sys_frame, text=f"{os_info}\n{ram_info}\n{python_info}", font=("Consolas", 10), text_color=TEXT_SEC_DARK, justify="left")
+        self.lbl_sys_details = ctk.CTkLabel(sys_frame, text=f"{os_info}\n{ram_info}\n{python_info}", font=(TECH_FONT_FAMILY, 10), text_color=TEXT_SEC_DARK, justify="left")
         self.lbl_sys_details.pack(anchor="w", padx=10, pady=(0, 8))
 
-        self.lbl_status = ctk.CTkLabel(self.main_panel, text="", font=("Segoe UI", 12), text_color=TEXT_DARK)
+        self.lbl_status = ctk.CTkLabel(self.main_panel, text="", font=(UI_FONT_FAMILY, 12), text_color=TEXT_DARK)
         self.lbl_status.pack(anchor="w", padx=20, pady=(5, 5))
         
-        self.progress = ctk.CTkProgressBar(self.main_panel, progress_color=ACCENT, fg_color=INPUT_BG_DARK)
+        self.progress = ctk.CTkProgressBar(self.main_panel, progress_color=ACCENT, fg_color=INPUT_BG_DARK, corner_radius=0, height=10)
         self.progress.pack(fill="x", padx=20, pady=(0, 10))
         self.progress.set(0)
 
@@ -399,11 +440,11 @@ class AmetistLauncher(ctk.CTk):
         if cfg.get("last_version_type") in ["Vanilla", "Fabric", "Forge", "Quilt"]: self.type_opt.set(cfg["last_version_type"])
 
     def create_option_row(self, parent, label_text, values, attr_name, pady_top, command=None):
-        frame = ctk.CTkFrame(parent, fg_color="transparent")
+        frame = ctk.CTkFrame(parent, fg_color="transparent", corner_radius=0)
         frame.pack(fill="x", padx=15, pady=(pady_top, 2))
-        lbl = ctk.CTkLabel(frame, text=label_text, font=("Segoe UI", 12, "bold"), text_color=TEXT_DARK, justify="left")
+        lbl = ctk.CTkLabel(frame, text=label_text, font=(UI_FONT_FAMILY, 12, "bold"), text_color=TEXT_DARK, justify="left")
         lbl.pack(anchor="w", pady=(0, 2))
-        opt = ctk.CTkOptionMenu(frame, values=values, fg_color=INPUT_BG_DARK, button_color=ACCENT, button_hover_color=ACCENT_HOVER, dropdown_fg_color=CARD_DARK, text_color=TEXT_DARK, command=command)
+        opt = ctk.CTkOptionMenu(frame, values=values, fg_color=INPUT_BG_DARK, button_color=ACCENT, button_hover_color=ACCENT_HOVER, dropdown_fg_color=CARD_DARK, text_color=TEXT_DARK, corner_radius=0, command=command)
         opt.pack(fill="x")
         setattr(self, attr_name, opt)
         setattr(self, f"{attr_name}_lbl", lbl)
@@ -441,11 +482,11 @@ class AmetistLauncher(ctk.CTk):
             ram_list = [f"{i} GB" for i in range(2, max_ram + 1, 2)]
             if not ram_list: ram_list = ["2 GB"]
             lbl_txt = f"{self.tr('ram_label')}"
-            self.ram_opt_lbl.configure(text_color=TEXT_SEC_DARK, font=("Segoe UI", 11, "bold"))
+            self.ram_opt_lbl.configure(text_color=TEXT_SEC_DARK, font=(UI_FONT_FAMILY, 11, "bold"))
         else:
             ram_list = ["2 GB", "4 GB", "6 GB", "8 GB", "12 GB", "16 GB", "24 GB", "32 GB"]
             lbl_txt = self.tr('ram_label')
-            self.ram_opt_lbl.configure(text_color=TEXT_DARK, font=("Segoe UI", 12, "bold"))
+            self.ram_opt_lbl.configure(text_color=TEXT_DARK, font=(UI_FONT_FAMILY, 12, "bold"))
 
         self.ram_opt_lbl.configure(text=lbl_txt)
         self.ram_opt.configure(values=ram_list)
@@ -565,7 +606,8 @@ class AmetistLauncher(ctk.CTk):
             ver_id = v.split()[0]
             is_dl = '✔' in v
             rb = ctk.CTkRadioButton(self.version_scroll, text=v, variable=self.selected_version_var, value=ver_id,
-                                    font=("Segoe UI", 12), text_color=TEXT_DARK if is_dl else TEXT_SEC_DARK, fg_color=ACCENT)
+                                    font=(UI_FONT_FAMILY, 12), text_color=TEXT_DARK if is_dl else TEXT_SEC_DARK,
+                                    fg_color=ACTIVE_COLOR, border_color=ACTIVE_COLOR, hover_color=ACCENT_HOVER)
             rb.pack(anchor="w", pady=4, padx=5)
 
     def open_settings(self):
@@ -638,6 +680,7 @@ class AmetistLauncher(ctk.CTk):
             self.btn_launch.configure(state="normal", fg_color=ACCENT)
 
 if __name__ == "__main__":
+    install_bundled_fonts()
     mc_dir = os.path.join(os.getenv("APPDATA") if os.name == "nt" else os.path.expanduser("~"), ".ametist_mc")
     cm = ConfigManager(mc_dir)
     if cm.config.get("first_run", True): FirstRunLanguageWindow(cm).mainloop()
