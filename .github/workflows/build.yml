@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt pyinstaller
       - name: Build executable
-        run: pyinstaller --noconfirm --clean --windowed --name AmetistLauncher --add-data "assets;assets" Ametist.py
+        run: pyinstaller --noconfirm --clean --windowed --name AmetistLauncher --hidden-import=PIL._tkinter_finder --hidden-import=PIL.ImageTk --hidden-import=tkinter --add-data "assets;assets" Ametist.py
       - name: Create ZIP package
         shell: pwsh
         run: Compress-Archive -Path dist/AmetistLauncher/* -DestinationPath AmetistLauncher-windows-x64.zip
@@ -46,7 +46,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt pyinstaller
       - name: Build executable
-        run: pyinstaller --noconfirm --clean --windowed --name AmetistLauncher --add-data 'assets:assets' Ametist.py
+        run: pyinstaller --noconfirm --clean --windowed --name AmetistLauncher --hidden-import=PIL._tkinter_finder --hidden-import=PIL.ImageTk --hidden-import=tkinter --add-data 'assets:assets' Ametist.py
       - name: Prepare AppDir
         run: |
           mkdir -p AmetistLauncher.AppDir/usr/bin
@@ -93,7 +93,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt pyinstaller
       - name: Build application bundle
-        run: pyinstaller --noconfirm --clean --windowed --name AmetistLauncher --add-data 'assets:assets' Ametist.py
+        run: pyinstaller --noconfirm --clean --windowed --name AmetistLauncher --hidden-import=PIL._tkinter_finder --hidden-import=PIL.ImageTk --hidden-import=tkinter --add-data 'assets:assets' Ametist.py
       - name: Create DMG
         run: hdiutil create -volname AmetistLauncher -srcfolder dist/AmetistLauncher.app -ov -format UDZO AmetistLauncher-macos.dmg
       - name: Upload macOS package
